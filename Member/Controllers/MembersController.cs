@@ -30,6 +30,7 @@ namespace Member.Controllers
 		public async Task<IActionResult> Index()
 		{
 
+
 			if (HttpContext.Session.GetString("Account") != null)
 			{
 				ViewData["Account"] = HttpContext.Session.GetString("Account");
@@ -38,61 +39,13 @@ namespace Member.Controllers
 				ViewData["Email"] = HttpContext.Session.GetString("Email");
 				return View(await _context.MembersModel.ToListAsync());
 			}
+			else
+			{
+				return RedirectToAction("Login", "Members");
+			}
 
-			return View();
 		}
 
-
-		// GET: Members/Edit/5
-		public async Task<IActionResult> Edit(string id)
-		{
-			if (id == null)
-			{
-				return NotFound();
-			}
-
-			var membersModel = await _context.MembersModel.FindAsync(id);
-			if (membersModel == null)
-			{
-				return NotFound();
-			}
-			return View(membersModel);
-		}
-
-		// POST: Members/Edit/5
-		// To protect from overposting attacks, enable the specific properties you want to bind to.
-		// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(string Account, [Bind("Account,Password,Email,Phone")] MembersModel membersModel)
-		{
-			if (Account != membersModel.Account)
-			{
-				return NotFound();
-			}
-
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(membersModel);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!MembersModelExists(membersModel.Account))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			return View(membersModel);
-		}
 
 
 
