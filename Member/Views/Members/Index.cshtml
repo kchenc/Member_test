@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Member.Models.MembersModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>會員首頁</h1>
+
+<div class="row">
+    @if (ViewData["Account"] != null)
+    {
+        <div class="form-group">
+            <p>hello!! @ViewData["Account"]</p>
+        </div>
+        <div class="form-group">
+            <p>Your Phone is @ViewData["Phone"]</p>
+        </div>
+
+    }
+    else
+    {
+        <p>session is not set</p>
+    }
+</div>
